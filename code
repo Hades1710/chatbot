@@ -1,0 +1,46 @@
+import streamlit as st
+import openai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+openai.api_key = os.getenv("openai api key")
+def main():
+    st.title("ElderEase")
+
+    # Buttons in the center
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Social Connector"):
+            st.write("Social Connector button clicked")
+
+        if st.button("Daily Reminder"):
+            st.write("Daily Reminder button clicked")
+
+            def generate_storytelling_chatbot():
+                st.write("Storytelling button clicked")
+                prompt = "Tell me a story about..."
+                response = openai.Completion.create(
+                    engine="text-davinci-003",
+                    prompt=prompt,
+                    max_tokens=100,
+                    n=1,
+                    stop=None,
+                    temperature=0.7,
+                )
+                story = response.choices[0].text.strip()
+                st.write(story)
+    with col2:
+        if st.button("Storytelling"):
+            generate_storytelling_chatbot()
+
+        if st.button("Act as a Family"):
+            family_options = ["Son", "Daughter", "Grandchild"]
+            family_choice = st.selectbox("Family Options", family_options)
+            if family_choice:
+                st.write(f"Acting as {family_choice}")
+
+
+
+main()
